@@ -1,8 +1,7 @@
-/* STORY MODAL STYLES */
 body #storyModal.story-modal {
   display: none;
   position: fixed;
-  z-index: 9999 !important; /* Prioritas tertinggi */
+  z-index: 9999 !important; 
   left: 0;
   top: 0;
   width: 100%;
@@ -156,7 +155,6 @@ body #storyModal.story-modal #detail-map {
   z-index: 1;
 }
 
-/* Loading Spinner dalam Modal */
 body #storyModal.story-modal .loading-spinner {
   display: flex;
   justify-content: center;
@@ -175,7 +173,6 @@ body #storyModal.story-modal .loading-spinner p {
   color: #4f46e5;
 }
 
-/* CAMERA MODAL */
 .camera-modal {
   display: none;
   position: fixed;

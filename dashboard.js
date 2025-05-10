@@ -35,7 +35,7 @@ function setupPhotoUpload() {
     
     const file = files[0];
     
-    if (file.size > 1024 * 1024) { // 1MB
+    if (file.size > 1024 * 1024) { 
       Swal.fire({
         icon: 'error',
         title: 'File Terlalu Besar',
@@ -44,7 +44,6 @@ function setupPhotoUpload() {
       return;
     }
     
-    // Periksa apakah ini file gambar
     if (!file.type.match('image.*')) {
       Swal.fire({
         icon: 'error',
@@ -54,7 +53,6 @@ function setupPhotoUpload() {
       return;
     }
     
-    // Preview gambar
     const reader = new FileReader();
     reader.onload = (e) => {
       imagePreview.src = e.target.result;
@@ -70,7 +68,6 @@ function setupPhotoUpload() {
   
   if (deletePhotoBtn) {
     deletePhotoBtn.addEventListener('click', () => {
-      // Reset file input
       if (photoInput) {
         photoInput.value = '';
       }
@@ -130,16 +127,13 @@ function updateUIBasedOnLoginStatus() {
       if (registerBtn) registerBtn.classList.remove('hidden');
       if (logoutBtn) logoutBtn.classList.add('hidden');
       
-      // Tampilkan landing page
       if (dashboardSection) dashboardSection.classList.add('hidden');
       if (landingSection) landingSection.classList.remove('hidden');
     }
   }
   
-  // Fungsi untuk logout
-// Fungsi untuk logout dengan konfirmasi
+
 function handleLogout() {
-  // Panggil Auth.logout jika tersedia
   if (typeof Auth !== 'undefined' && Auth.logout) {
     Auth.logout();
   } else {
@@ -147,8 +141,7 @@ function handleLogout() {
     window.location.href = "index.html";
   }
 }
-  
-  // Setup fitur dashboard
+
   function setupDashboardFeatures() {
     setupLocationFeatures();
     setupAudioRecording();
@@ -161,10 +154,6 @@ function handleLogout() {
     updateUIBasedOnLoginStatus();
   }
   
-  // Setup form tambah cerita
-  
-  // Setup fitur lokasi
-// Setup fitur lokasi
 function setupLocationFeatures() {
   const getLocationBtn = document.getElementById('getLocationBtn');
   const storyLat = document.getElementById('storyLat');
@@ -172,16 +161,14 @@ function setupLocationFeatures() {
   const mapElement = document.getElementById('map');
   
   let map;
-  let marker; // Pindahkan deklarasi marker ke sini agar bisa diakses di seluruh fungsi
+  let marker;
   
-  // Inisialisasi peta jika elemen ada
   if (mapElement) {
     map = L.map('map').setView([-6.2088, 106.8456], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
     
-    // Tambahkan event click ke peta
     map.on('click', function(e) {
       const lat = e.latlng.lat.toFixed(6);
       const lng = e.latlng.lng.toFixed(6);
@@ -189,25 +176,20 @@ function setupLocationFeatures() {
       if (storyLat) storyLat.value = lat;
       if (storyLon) storyLon.value = lng;
       
-      // Update marker
       updateMarker(lat, lng);
     });
   }
   
-  // Fungsi untuk update marker (menghapus yang lama dan membuat yang baru)
   function updateMarker(lat, lng) {
     if (!map) return;
     
-    // Hapus marker lama jika ada
     if (marker) {
       map.removeLayer(marker);
     }
     
-    // Buat marker baru
     marker = L.marker([lat, lng]).addTo(map);
   }
   
-  // Event listener untuk tombol get location
   if (getLocationBtn) {
     getLocationBtn.addEventListener('click', () => {
       if (navigator.geolocation) {
@@ -219,10 +201,9 @@ function setupLocationFeatures() {
             if (storyLat) storyLat.value = lat;
             if (storyLon) storyLon.value = lon;
             
-            // Update peta
             if (map) {
               map.setView([lat, lon], 15);
-              updateMarker(lat, lon); // Gunakan fungsi updateMarker
+              updateMarker(lat, lon); 
             }
             
             Swal.fire({
@@ -269,7 +250,6 @@ function setupLocationFeatures() {
     }
     window.resetAudioPreview = resetAudioPreview;
     
-    // Event listener untuk tombol rekam audio
     if (recordAudioBtn) {
       recordAudioBtn.addEventListener('click', async () => {
         try {
@@ -277,10 +257,8 @@ function setupLocationFeatures() {
           mediaRecorder = new MediaRecorder(stream);
           audioChunks = [];
           
-          // Mulai rekaman
           mediaRecorder.start();
           
-          // Tampilkan timer dan tombol stop
           let seconds = 0;
           Swal.fire({
             title: 'Merekam Audio',
@@ -294,16 +272,13 @@ function setupLocationFeatures() {
             showConfirmButton: false,
             allowOutsideClick: false,
             willClose: () => {
-              // Hentikan rekaman jika modal ditutup
               if (mediaRecorder && mediaRecorder.state === 'recording') {
                 mediaRecorder.stop();
               }
-              // Hentikan stream
               stream.getTracks().forEach(track => track.stop());
             }
           });
           
-          // Timer untuk rekaman
           const timerInterval = setInterval(() => {
             seconds++;
             const minutes = Math.floor(seconds / 60);
@@ -312,7 +287,6 @@ function setupLocationFeatures() {
               `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
           }, 1000);
           
-          // Event listener untuk tombol stop
           document.getElementById('stopRecordingBtn').addEventListener('click', () => {
             if (mediaRecorder && mediaRecorder.state === 'recording') {
               mediaRecorder.stop();
@@ -321,19 +295,15 @@ function setupLocationFeatures() {
             Swal.close();
           });
           
-          // Event saat data tersedia
           mediaRecorder.addEventListener('dataavailable', (e) => {
             if (e.data.size > 0) {
               audioChunks.push(e.data);
             }
           });
           
-          // Event saat rekaman selesai
           mediaRecorder.addEventListener('stop', () => {
-            // Hentikan stream
             stream.getTracks().forEach(track => track.stop());
             
-            // Buat blob dan tampilkan di audio player
             const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
             const audioUrl = URL.createObjectURL(audioBlob);
             
@@ -343,7 +313,6 @@ function setupLocationFeatures() {
               deleteAudioBtn.style.display = 'inline-block';
             }
             
-            // Tampilkan pesan sukses
             Swal.fire({
               icon: 'success',
               title: 'Rekaman Berhasil',
@@ -363,7 +332,6 @@ function setupLocationFeatures() {
       });
     }
     
-    // Event listener untuk tombol hapus audio
     if (deleteAudioBtn) {
       deleteAudioBtn.addEventListener('click', () => {
         resetAudioPreview();
@@ -378,9 +346,6 @@ function setupLocationFeatures() {
       });
     }
   }
-  
-  // Expose fungsi logout ke global scope juga untuk keamanan jika export gagal
   window.handleLogout = handleLogout;
   
-  // Export fungsi untuk digunakan di index.js
   export { updateUIBasedOnLoginStatus, handleLogout, setupDashboardFeatures };

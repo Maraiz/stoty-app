@@ -1,4 +1,3 @@
-// ui.js - Mengelola interface dan animasi
 import { DOM } from '../utils/dom.js';
 import { Auth } from './auth.js';
 

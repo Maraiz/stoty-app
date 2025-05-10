@@ -1,4 +1,3 @@
-/* RESPONSIVE DESIGN */
 @media (max-width: 768px) {
     .main-header {
       padding: 1rem;
@@ -36,7 +35,6 @@
       margin-top: 0.5rem;
     }
   
-    /* Modal responsive adjustments */
     body #storyModal.story-modal .modal-content {
       width: 95%;
       max-height: 95vh;
@@ -56,7 +54,6 @@
     }
   }
   
-  /* Camera modal responsive adjustments */
   @media (min-width: 768px) {
     .camera-modal-content {
       margin: 5% auto;

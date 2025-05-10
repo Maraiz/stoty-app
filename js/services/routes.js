@@ -1,13 +1,8 @@
-// routes.js - Mengelola routing berbasis hash dalam SPA
-
-// Import fungsi navigasi dari file lain jika perlu
 import { showLanding, showLogin, showRegister, showDashboard } from '../../index.js';
 import { StoryController } from '../controllers/story.js';
 import { PageTransition } from './transition.js';
 
-// Definisi objek router
 const Router = {
-  // Mendefinisikan route dan handler-nya
   routes: {
     'home': {
       handler: function() {
@@ -29,7 +24,6 @@ const Router = {
             showLogin();
           });
         } else {
-          // Redirect ke dashboard jika sudah login
           window.location.hash = '#dashboard';
         }
       }
@@ -42,7 +36,6 @@ const Router = {
             showRegister();
           });
         } else {
-          // Redirect ke dashboard jika sudah login
           window.location.hash = '#dashboard';
         }
       }
@@ -53,77 +46,56 @@ const Router = {
         if (isLoggedIn) {
           PageTransition.transition(() => {
             showDashboard();
-            // Refresh data cerita jika fungsi tersedia
             if (typeof StoryController !== 'undefined' && StoryController.getStories) {
               StoryController.getStories();
             }
           });
         } else {
-          // Redirect ke login jika belum login
           window.location.hash = '#login';
         }
       },
-      // Opsional: definisi untuk sub-routes
       subroutes: {
         'stories': function() {
-          // Menampilkan daftar cerita
           PageTransition.transition(() => {
             showDashboard();
-            // Logika tambahan untuk melihat daftar cerita
           });
         },
         'profile': function() {
-          // Menampilkan profil
           PageTransition.transition(() => {
             showDashboard();
-            // Logika tambahan untuk melihat profil
           });
         }
       }
     }
   },
   
-  // Fungsi untuk menangani perubahan hash
   handleHashChange: function() {
-    // Ambil hash dari URL (hapus karakter # diawal)
     let hash = window.location.hash.substring(1);
-    
-    // Jika hash kosong, gunakan 'home' sebagai default
     if (!hash) {
       hash = 'home';
     }
-    
-    // Periksa apakah hash mengandung subroute (format: 'mainroute/subroute')
+
     const hashParts = hash.split('/');
     const mainRoute = hashParts[0];
     const subRoute = hashParts.length > 1 ? hashParts[1] : null;
     
-    // Cek apakah route ada
     if (this.routes[mainRoute]) {
-      // Jika ada subroute dan route memiliki subroutes
       if (subRoute && this.routes[mainRoute].subroutes && this.routes[mainRoute].subroutes[subRoute]) {
-        // Panggil handler untuk subroute
         this.routes[mainRoute].subroutes[subRoute]();
       } else {
-        // Panggil handler untuk route utama
         this.routes[mainRoute].handler();
       }
     } else {
-      // Route tidak ditemukan, redirect ke home
       console.warn(`Route '${hash}' tidak ditemukan, redirect ke home`);
       window.location.hash = '#home';
     }
   },
   
-  // Inisialisasi router
   init: function() {
-    // Set event listener untuk hashchange
     window.addEventListener('hashchange', () => this.handleHashChange());
     
-    // Tangani hash awal saat halaman dimuat
     this.handleHashChange();
     
-    // Log inisialisasi router dengan info dukungan View Transition
     if (PageTransition.isSupported()) {
       console.log('Router initialized with View Transition support');
     } else {
@@ -132,5 +104,4 @@ const Router = {
   }
 };
 
-// Export router
 export default Router;

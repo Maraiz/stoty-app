@@ -1,4 +1,3 @@
-/* SECTION STYLING */
 .section-header {
   margin-bottom: 1.5rem;
 }
@@ -16,7 +15,6 @@
   font-size: 0.95rem;
 }
 
-/* BUTTON STYLES */
 .btn-primary, .btn-secondary {
   padding: 0.8rem 1.5rem;
   border-radius: 8px;
@@ -49,7 +47,6 @@
   background-color: #cbd5e1;
 }
 
-/* UPLOAD BUTTONS */
 .upload-btn {
   padding: 10px 15px;
   background-color: #3498db;
@@ -74,7 +71,6 @@
   background-color: #27ae60;
 }
 
-/* STAT CARD */
 .stat-card {
   background: white;
   border-radius: 10px;

@@ -10,7 +10,7 @@ export async function getStories(token) {
       const result = await response.json();
   
       if (response.ok && !result.error) {
-        return result.listStory; // Kembalikan daftar cerita
+        return result.listStory; 
       } else {
         throw new Error(result.message || "Gagal mengambil cerita");
       }

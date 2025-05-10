@@ -9,12 +9,10 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"/>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="stylesheet" href="./styles/main.css">
-
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
-  <!-- Penerapan Skip to Content -->
   <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
 
   <header class="main-header" role="banner">
@@ -32,7 +30,6 @@
   </header>
 
   <main id="main-content">
-    <!-- Landing Page -->
     <section class="landing" id="landingSection" aria-labelledby="landing-heading">
       <div class="landing-content">
         <div class="landing-text">
@@ -47,7 +44,6 @@
       </div>
     </section>
 
-<!-- Login Form dengan label tersembunyi -->
 <section class="form-box hidden" id="loginBox" aria-labelledby="login-heading">
   <h2 id="login-heading">Login</h2>
   <form id="loginForm">
@@ -63,7 +59,6 @@
   </form>
 </section>
 
-<!-- Register Form dengan label tersembunyi -->
 <section class="form-box hidden" id="registerBox" aria-labelledby="register-heading">
   <h2 id="register-heading">Register</h2>
   <form id="registerForm">
@@ -82,14 +77,12 @@
     <button type="submit">Daftar</button>
   </form>
 </section>
-    <!-- Dashboard -->
+
 <section class="dashboardpage hidden" id="dashboardSection" aria-labelledby="dashboardGreeting">
   <section class="dashboard">
     <h2 id="dashboardGreeting">Selamat datang di dashboard!</h2>
     <p>Selamat menikmati fitur Book App. Temukan buku favorit Anda di sini.</p>
   </section>
-
-      <!-- Tambah Cerita -->
       <section class="add-story-section" aria-labelledby="add-story-heading">
         <div class="section-header">
           <h2 id="add-story-heading">Tambah Cerita Baru</h2>
@@ -153,7 +146,6 @@
             </div>
           </div>
 
-          <!-- Location -->
           <div class="form-group">
             <fieldset>
               <legend>Lokasi</legend>
@@ -192,7 +184,6 @@
         </div>
       </section>
 
-      <!-- Showcase -->
       <section class="book-showcase" aria-labelledby="showcase-heading">
         <h2 id="showcase-heading" class="sr-only">Buku Pilihan</h2>
         
@@ -225,7 +216,6 @@
         </article>
       </section>
       
-      <!-- Detail -->
       <section class="story-detail-section" aria-labelledby="detail-heading">
         <h2 id="detail-heading" class="sr-only">Detail Cerita</h2>
         <div id="storyDetail" class="story-detail" aria-live="polite"></div>
@@ -236,7 +226,6 @@
           <button class="close-modal" aria-label="Tutup modal">&times;</button>
           <div id="modalContent" class="modal-body">
             <h2 id="modal-title" class="sr-only">Detail Cerita</h2>
-            <!-- Content will be dynamically inserted here -->
           </div>
         </div>
       </div>

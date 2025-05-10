@@ -1,4 +1,3 @@
-// story.js - Mengelola cerita dan interaksi dengan API
 import { DOM } from '../utils/dom.js';
 import { Auth } from './auth.js';
 import { UI } from './ui.js';
@@ -162,7 +161,6 @@ export const StoryController = {
         ` : ''}
       `;
 
-      // Initialize Leaflet map for story detail if coordinates are available
       if (lat && lon) {
         setTimeout(() => {
           this.initDetailMap(parseFloat(lat), parseFloat(lon), name);
@@ -181,42 +179,33 @@ export const StoryController = {
   },
 
   initDetailMap(lat, lon, name) {
-    // Clean up previous map instance if it exists
     if (detailMap) {
       detailMap.remove();
       detailMap = null;
     }
 
-    // Create new map instance
     detailMap = L.map('detail-map').setView([lat, lon], 14);
-
-    // Add OpenStreetMap tiles
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(detailMap);
 
-    // Add a marker for the story location
     const marker = L.marker([lat, lon])
       .addTo(detailMap)
       .bindPopup(name || 'Lokasi Cerita')
       .openPopup();
 
-    // Make sure map renders correctly
     setTimeout(() => {
       detailMap.invalidateSize();
     }, 100);
   },
 
-  // Tambahkan ini ke dalam setupModalEvents di StoryController
   setupModalEvents() {
-    // Pastikan referensi DOM untuk closeModalBtn sudah benar
     DOM.closeModalBtn = document.querySelector('.close-modal');
 
     DOM.closeModalBtn.addEventListener('click', () => {
       DOM.storyModal.classList.remove('show');
       document.body.style.overflow = 'auto';
 
-      // Clean up map instance when modal is closed
       if (detailMap) {
         detailMap.remove();
         detailMap = null;
@@ -228,7 +217,6 @@ export const StoryController = {
         DOM.storyModal.classList.remove('show');
         document.body.style.overflow = 'auto';
 
-        // Clean up map instance when modal is closed
         if (detailMap) {
           detailMap.remove();
           detailMap = null;
@@ -241,7 +229,6 @@ export const StoryController = {
         DOM.storyModal.classList.remove('show');
         document.body.style.overflow = 'auto';
 
-        // Clean up map instance when modal is closed
         if (detailMap) {
           detailMap.remove();
           detailMap = null;
@@ -252,7 +239,6 @@ export const StoryController = {
       adjustModalPosition();
     });
 
-    // Adjust modal position when window is resized
     window.addEventListener('resize', () => {
       if (DOM.storyModal.classList.contains('show')) {
         adjustModalPosition();
@@ -264,12 +250,10 @@ export const StoryController = {
       const modalHeight = modalContent.offsetHeight;
 
       if (modalHeight > windowHeight) {
-        // Jika modal lebih tinggi dari window, posisikan di atas
         DOM.storyModal.style.alignItems = 'flex-start';
         DOM.storyModal.style.paddingTop = '20px';
         DOM.storyModal.style.paddingBottom = '20px';
       } else {
-        // Jika modal lebih pendek dari window, posisikan di tengah
         DOM.storyModal.style.alignItems = 'center';
         DOM.storyModal.style.paddingTop = '0';
         DOM.storyModal.style.paddingBottom = '0';

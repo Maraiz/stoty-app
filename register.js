@@ -17,7 +17,6 @@ registerForm.addEventListener("submit", async (e) => {
   }
 
   try {
-    // Menampilkan loading indicator
     Swal.fire({
       title: 'Sedang mendaftar...',
       allowOutsideClick: false,
@@ -33,7 +32,7 @@ registerForm.addEventListener("submit", async (e) => {
     });
 
     const result = await response.json();
-    Swal.close(); // Menutup loading indicator
+    Swal.close();
 
     if (!result.error) {
       Swal.fire({
@@ -42,7 +41,7 @@ registerForm.addEventListener("submit", async (e) => {
         text: 'Pendaftaran berhasil, silakan login.',
         confirmButtonColor: '#3085d6',
       }).then(() => {
-        showLogin(); // Arahkan ke form login setelah OK diklik
+        showLogin();
       });
     } else {
       Swal.fire({
@@ -53,7 +52,7 @@ registerForm.addEventListener("submit", async (e) => {
       });
     }
   } catch (error) {
-    Swal.close(); // Menutup loading indicator jika terjadi error
+    Swal.close();
     Swal.fire({
       icon: 'error',
       title: 'Oops!',

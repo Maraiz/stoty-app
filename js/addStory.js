@@ -1,5 +1,3 @@
-// api/addStory.js
-
 export async function addStory({ token, formData }) {
     try {
       const response = await fetch('https://story-api.dicoding.dev/v1/stories', {

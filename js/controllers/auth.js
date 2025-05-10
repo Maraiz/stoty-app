@@ -1,4 +1,3 @@
-// auth.js - Mengelola autentikasi pengguna
 export const Auth = {
     token: localStorage.getItem('token'),
     userName: localStorage.getItem('name'),
@@ -11,7 +10,6 @@ export const Auth = {
     },
     
     logout() {
-      // Tampilkan konfirmasi terlebih dahulu
       Swal.fire({
         icon: 'question',
         title: 'Konfirmasi Logout',
@@ -22,12 +20,9 @@ export const Auth = {
         confirmButtonColor: '#d33',
         cancelButtonColor: '#3085d6',
       }).then((result) => {
-        // Hanya lakukan logout jika pengguna menekan tombol konfirmasi
         if (result.isConfirmed) {
-          // Hapus semua data dari localStorage
           localStorage.clear();
           
-          // Tampilkan notifikasi sukses
           Swal.fire({
             icon: 'success',
             title: 'Logout Berhasil',

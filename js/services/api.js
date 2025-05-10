@@ -1,7 +1,5 @@
-// api.js - Fungsi untuk berkomunikasi dengan API
 const API_BASE_URL = 'https://story-api.dicoding.dev/v1';
 
-// Fungsi tambah cerita
 export async function addStory({ token, formData }) {
   try {
     const response = await fetch(`${API_BASE_URL}/stories`, {
@@ -25,7 +23,6 @@ export async function addStory({ token, formData }) {
   }
 }
 
-// Export fungsi API lain yang mungkin diperlukan di masa depan
 export async function getStoriesWithLocation(token) {
   try {
     const response = await fetch(`${API_BASE_URL}/stories?location=1`, {
