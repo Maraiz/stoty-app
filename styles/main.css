@@ -1,0 +1,32 @@
+@import 'base.css';
+@import 'layout.css';
+@import 'components.css';
+@import 'story-form.css';
+@import 'book-showcase.css';
+@import 'animations.css';
+@import 'responsive.css';
+@import 'utilities.css';
+@import 'aksesibilitas.css';
+
+
+@import 'style.css';
+
+
+@import 'upload.css';
+@import 'modal.css';
+@import 'camera.css';
+
+
+
+.dashboard {
+  animation-delay: 0.1s;
+}
+
+.add-story-section {
+  animation-delay: 0.2s;
+}
+
+.book-card {
+  animation-delay: 0.4s;
+}
+

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Book App - Platform jual beli buku fisik dan digital yang lengkap, cepat, dan aman.">
+  <title>Book App</title>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="./styles/main.css">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+  <!-- Penerapan Skip to Content -->
+  <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+  <header class="main-header" role="banner">
+    <a class="navbar-brand" href="#home">
+      <i class="fa fa-book" aria-hidden="true"></i>
+      <span>Book App</span>
+    </a>
+    <nav class="nav-links" role="navigation" aria-label="Menu utama">
+      <button id="loginBtn" aria-label="Login">Login</button>
+      <button id="registerBtn" aria-label="Register">Register</button>
+      <button id="logoutBtn" class="hidden" aria-label="Logout">
+        <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+      </button>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <!-- Landing Page -->
+    <section class="landing" id="landingSection" aria-labelledby="landing-heading">
+      <div class="landing-content">
+        <div class="landing-text">
+          <h1 id="landing-heading">Selamat Datang di Book App</h1>
+          <p>
+            Temukan dan dapatkan buku favorit Anda dengan mudah melalui Book App 
+            platform terpercaya untuk jual beli buku fisik dan digital, lengkap, cepat,
+            dan aman dalam satu genggaman.
+          </p>
+          <button class="buy-now-btn" aria-label="Beli sekarang">Beli Sekarang</button>
+        </div>
+      </div>
+    </section>
+
+<!-- Login Form dengan label tersembunyi -->
+<section class="form-box hidden" id="loginBox" aria-labelledby="login-heading">
+  <h2 id="login-heading">Login</h2>
+  <form id="loginForm">
+    <div class="form-group">
+      <label for="login-email" class="sr-only">Email</label>
+      <input type="email" id="login-email" name="email" placeholder="Email" required aria-required="true" />
+    </div>
+    <div class="form-group">
+      <label for="login-password" class="sr-only">Password</label>
+      <input type="password" id="login-password" name="password" placeholder="Password" required aria-required="true" />
+    </div>
+    <button type="submit">Login</button>
+  </form>
+</section>
+
+<!-- Register Form dengan label tersembunyi -->
+<section class="form-box hidden" id="registerBox" aria-labelledby="register-heading">
+  <h2 id="register-heading">Register</h2>
+  <form id="registerForm">
+    <div class="form-group">
+      <label for="register-name" class="sr-only">Nama</label>
+      <input type="text" id="register-name" name="name" placeholder="Nama" required aria-required="true" />
+    </div>
+    <div class="form-group">
+      <label for="register-email" class="sr-only">Email</label>
+      <input type="email" id="register-email" name="email" placeholder="Email" required aria-required="true" />
+    </div>
+    <div class="form-group">
+      <label for="register-password" class="sr-only">Password</label>
+      <input type="password" id="register-password" name="password" placeholder="Password" required aria-required="true" minlength="8" />
+    </div>
+    <button type="submit">Daftar</button>
+  </form>
+</section>
+    <!-- Dashboard -->
+<section class="dashboardpage hidden" id="dashboardSection" aria-labelledby="dashboardGreeting">
+  <section class="dashboard">
+    <h2 id="dashboardGreeting">Selamat datang di dashboard!</h2>
+    <p>Selamat menikmati fitur Book App. Temukan buku favorit Anda di sini.</p>
+  </section>
+
+      <!-- Tambah Cerita -->
+      <section class="add-story-section" aria-labelledby="add-story-heading">
+        <div class="section-header">
+          <h2 id="add-story-heading">Tambah Cerita Baru</h2>
+          <p>Bagikan ceritamu dengan pembaca lainnya</p>
+        </div>
+        <form id="addStoryForm" class="story-form">
+          <div class="form-group">
+            <label for="storyDescription">Deskripsi Cerita</label>
+            <textarea id="storyDescription" name="description" rows="4" placeholder="Ceritakan kisahmu di sini..." required aria-required="true"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="storyPhoto">Unggah Foto</label>
+            <div class="file-upload">
+              <input type="file" id="storyPhoto" name="photo" accept="image/*" aria-describedby="photo-hint">
+              <span id="photo-hint" class="sr-only">Unggah foto untuk cerita Anda. Ukuran maksimal 1MB.</span>
+              
+              <video id="cameraFeed" autoplay aria-hidden="true"></video>
+              <canvas id="cameraCanvas" aria-hidden="true"></canvas>
+              
+              <div id="cameraPreview" aria-live="polite">
+                <img id="capturedImage" src="#" alt="Pratinjau foto yang diambil" />
+                <div>
+                  <button type="button" id="retakeBtn" aria-label="Ambil ulang foto">Ulangi Foto</button>
+                  <button type="button" id="usePhotoBtn" aria-label="Gunakan foto yang diambil">Gunakan Foto</button>
+                </div>
+              </div>
+              
+              <div class="upload-preview" role="region" aria-live="polite">
+                <img id="imagePreview" src="#" alt="Pratinjau foto yang diunggah">
+                <div class="upload-placeholder" id="uploadPlaceholder">
+                  <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                  <p>Pilih foto (Maks. 1MB)</p>
+                </div>
+              </div>
+              
+              <div class="upload-actions">
+                <button type="button" id="uploadFileBtn" class="upload-btn" aria-label="Pilih file foto">
+                  <i class="fa fa-folder-open" aria-hidden="true"></i> Pilih File
+                </button>
+                <button type="button" id="takePictureBtn" class="upload-btn camera-btn" aria-label="Ambil foto dengan kamera">
+                  <i class="fa fa-camera" aria-hidden="true"></i> Ambil Foto
+                </button>
+                <button type="button" id="deletePhotoBtn" class="upload-btn danger-btn" aria-label="Hapus foto">
+                  <i class="fa fa-trash" aria-hidden="true"></i> Hapus Foto
+                </button>
+                
+                <div class="audio-record-wrapper">
+                  <button type="button" id="recordAudioBtn" class="upload-btn audio-btn" aria-label="Rekam audio">
+                    <i class="fa fa-microphone" aria-hidden="true"></i> Rekam Audio
+                  </button>
+                  <button type="button" id="deleteAudioBtn" class="upload-btn danger-btn" aria-label="Hapus rekaman audio">
+                    <i class="fa fa-trash" aria-hidden="true"></i> Hapus Rekaman
+                  </button>
+                  <div id="audioPreviewContainer" aria-live="polite">
+                    <label for="audioPreview">Preview Rekaman:</label>
+                    <audio id="audioPreview" controls></audio>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Location -->
+          <div class="form-group">
+            <fieldset>
+              <legend>Lokasi</legend>
+              <div class="form-row">
+                <div class="form-group location-group">
+                  <label for="storyLat">Latitude</label>
+                  <input type="text" id="storyLat" name="lat" placeholder="Contoh: -6.2088" aria-describedby="lat-hint">
+                  <span id="lat-hint" class="sr-only">Masukkan koordinat latitude, misalnya -6.2088</span>
+                </div>
+                <div class="form-group location-group">
+                  <label for="storyLon">Longitude</label>
+                  <input type="text" id="storyLon" name="lon" placeholder="Contoh: 106.8456" aria-describedby="lon-hint">
+                  <span id="lon-hint" class="sr-only">Masukkan koordinat longitude, misalnya 106.8456</span>
+                </div>
+                <div class="location-action">
+                  <button type="button" id="getLocationBtn" aria-label="Dapatkan lokasi saat ini">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i> Lokasi Saat Ini
+                  </button>
+                </div>
+              </div>
+              <div id="map" aria-label="Peta interaktif untuk memilih lokasi" role="application"></div>
+              <iframe id="mapIframe" title="Peta lokasi" allowfullscreen="" loading="lazy"></iframe>
+            </fieldset>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-primary" aria-label="Kirim cerita">
+              <i class="fa fa-paper-plane" aria-hidden="true"></i> Kirim Cerita
+            </button>
+          </div>
+        </form>
+        
+        <div id="loadingIndicator" class="loading-spinner" aria-live="assertive" role="status">
+          <i class="fa fa-spinner fa-pulse fa-3x" aria-hidden="true"></i>
+          <p>Sedang mengirim cerita...</p>
+        </div>
+      </section>
+
+      <!-- Showcase -->
+      <section class="book-showcase" aria-labelledby="showcase-heading">
+        <h2 id="showcase-heading" class="sr-only">Buku Pilihan</h2>
+        
+        <article class="book-card">
+          <div class="book-cover">
+            <img src="#" alt="Sampul buku Laskar Pelangi">
+          </div>
+          <div class="book-info">
+            <h3 class="book-title">Laskar Pelangi</h3>
+            <p class="book-author">Andrea Hirata</p>
+            <div class="book-stats">
+              <span><i class="fa fa-eye" aria-hidden="true"></i> <span>1.2k dilihat</span></span>
+              <span><i class="fa fa-heart" aria-hidden="true"></i> <span>124 disukai</span></span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="book-card">
+          <div class="book-cover">
+            <img src="#" alt="Sampul buku Laskar Pelangi">
+          </div>
+          <div class="book-info">
+            <h3 class="book-title">Laskar Pelangi</h3>
+            <p class="book-author">Andrea Hirata</p>
+            <div class="book-stats">
+              <span><i class="fa fa-eye" aria-hidden="true"></i> <span>1.2k dilihat</span></span>
+              <span><i class="fa fa-heart" aria-hidden="true"></i> <span>124 disukai</span></span>
+            </div>
+          </div>
+        </article>
+      </section>
+      
+      <!-- Detail -->
+      <section class="story-detail-section" aria-labelledby="detail-heading">
+        <h2 id="detail-heading" class="sr-only">Detail Cerita</h2>
+        <div id="storyDetail" class="story-detail" aria-live="polite"></div>
+      </section>
+
+      <div id="storyModal" class="story-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-content">
+          <button class="close-modal" aria-label="Tutup modal">&times;</button>
+          <div id="modalContent" class="modal-body">
+            <h2 id="modal-title" class="sr-only">Detail Cerita</h2>
+            <!-- Content will be dynamically inserted here -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="main-footer" role="contentinfo">
+    <p>&copy; 2025 Book App. Dibuat oleh Maulana Nurfaizi Anugerah</p>
+  </footer>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script type="module" src="./index.js"></script>
+</body>
+</html>
